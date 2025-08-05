@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>timer</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #c3cfe2, #c3e0e5);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #333;
+    }
+
+    section {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        width: 350px;
+        text-align: center;
+    }
+
+    #countDown {
+        font-size: 70px;
+        font-weight: 600;
+        margin-bottom: 25px;
+        color: #222;
+    }
+
+    .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 10px 18px;
+        font-size: 15px;
+        font-weight: 500;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        background: linear-gradient(to right, #667eea, #764ba2);
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3);
+    }
+
+    .resetValue {
+        max-height: 150px;
+        overflow-y: auto;
+        padding-top: 10px;
+    }
+
+    .resetValue p {
+        font-size: 14px;
+        margin: 4px 0;
+        color: #555;
+        font-style: italic;
+    }
+
+    /* Optional scrollbar style for .resetValue */
+    .resetValue::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .resetValue::-webkit-scrollbar-thumb {
+        background: #aaa;
+        border-radius: 10px;
+    }
+</style>
+
+
+<body>
+    <section>
+        <p id="countDown">0</p>
+        <div class="buttons">
+            <button class="start_btn">Start</button>
+            <button class="reset_btn">Reset</button>
+            <button class="stop_btn">Stop</button>
+            <button class="time_btn">getTime</button>
+            <button class="clear_btn">clearTime</button>
+        </div>
+        <div class="resetValue"></div>
+    </section>
+
+    <script>
+    const countDownElement = document.getElementById("countDown");
+    const resetValueElement = document.querySelector(".resetValue");
+
+    let startCount = 0;
+    let intervalId = null;
+
+    const startTimer = () => {
+        if (intervalId) return;
+        intervalId = setInterval(() => {
+            countDownElement.innerText = startCount++;
+        }, 1000);
+    };
+
+    const stopTimer = () => {
+        showStopValue();
+        clearInterval(intervalId);
+        intervalId = null;
+    };
+
+    const resetTimer = () => {
+        startCount = 0;
+        countDownElement.innerText = startCount;
+        clearInterval(intervalId);
+        intervalId = null;
+    };
+
+    const showStopValue = () => {
+        const newpara = document.createElement("p");
+        newpara.innerText = `The stop time is ${startCount - 1}`;
+        resetValueElement.append(newpara);
+    };
+
+    const cleartime = () => {
+        resetValueElement.innerHTML = "";
+    };
+
+    document.querySelector(".start_btn").addEventListener("click", startTimer);
+    document.querySelector(".reset_btn").addEventListener("click", resetTimer);
+    document.querySelector(".stop_btn").addEventListener("click", stopTimer);
+    document.querySelector(".time_btn").addEventListener("click", showStopValue);
+    document.querySelector(".clear_btn").addEventListener("click", cleartime);
+</script>
+
+</body>
+</html>
