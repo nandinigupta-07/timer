@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periodic Table</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        color: #0d47a1;
+    }
+
+    .mainbody {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 10px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .element {
+        background: white;
+        border: 2px solid #90caf9;
+        border-radius: 8px;
+        padding: 20px 0;
+        font-weight: bold;
+        color: #0d47a1;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .element:hover {
+        background: #64b5f6;
+        color: white;
+        transform: scale(1.05);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<body>
+    <h1>Event Delegation - Periodic Table</h1>
+    <section class="mainbody"></section>
+<script>
+    const createPeriodicele = (symbol, atomicno, name) => {
+        const element = document.createElement('div');
+        element.classList.add("element");
+        element.innerHTML = symbol;
+        element.setAttribute("data-atomic-number", atomicno);
+        element.setAttribute("data-element-name", name); // name attribute match kiya
+        return element;
+    };
+
+    const HandleEleClick = (event) => {
+        const target = event.target;
+
+        if (target.classList.contains("element")) {
+            const atomicNo = target.getAttribute("data-atomic-number");
+            const elename = target.getAttribute("data-element-name"); // same attribute name
+            alert(`Atomic Number: ${atomicNo}\nElement Name: ${elename}`);
+        }
+    };
+
+    function InitialisePeriodicTable() {
+        const mainbody = document.querySelector(".mainbody");
+        for (let i = 1; i <= 50; i++) {
+            const element = createPeriodicele(`ele${i}`, i, `element ${i}`);
+            mainbody.append(element); // element variable append kiya
+        }
+        mainbody.addEventListener('click', HandleEleClick);
+    }
+
+    InitialisePeriodicTable();
+</script>
+
+</body>
+</html>
